@@ -13,6 +13,14 @@ const db = mysql.createConnection({
   database: "test",
 });
 
+db.connect((err) => {
+  if (err) {
+    console.error("Error connecting to the database:", err);
+    return;
+  }
+  console.log("Connected to the MySQL server.");
+});
+
 app.get("/", (req, res) => {
   res.json("hello");
 });
@@ -24,29 +32,35 @@ app.get("/books", (req, res) => {
       console.log(err);
       return res.json(err);
     }
+    console.log('Data from database:', data);
     return res.json(data);
   });
 });
 
 app.post("/books", (req, res) => {
-  const q = "INSERT INTO books(`title`, `desc`, `price`, `cover`) VALUES (?)";
+  const { title, description, price, cover } = req.body;
+  const q = "INSERT INTO books (`title`, `description`, `price`, `cover`) VALUES (?, ?, ?, ?)";
+  const values = [title, description, price, cover];
 
-  const values = [
-    req.body.title,
-    req.body.desc,
-    req.body.price,
-    req.body.cover,
-  ];
-
-  db.query(q, [values], (err, data) => {
-    if (err) return res.send(err);
-    return res.json(data);
+  db.query(q, values, (err, result) => {
+    if (err) {
+      console.error("Error inserting book:", err);
+      return res.status(500).json({ error: "Error inserting book" });
+    }
+    const insertedBook = {
+      id: result.insertId, // Assuming your result object provides the inserted ID
+      title,
+      description,
+      price,
+      cover,
+    };
+    return res.status(201).json(insertedBook);
   });
 });
 
 app.delete("/books/:id", (req, res) => {
   const bookId = req.params.id;
-  const q = " DELETE FROM books WHERE id = ? ";
+  const q = "DELETE FROM books WHERE id = ?";
 
   db.query(q, [bookId], (err, data) => {
     if (err) return res.send(err);
@@ -56,16 +70,16 @@ app.delete("/books/:id", (req, res) => {
 
 app.put("/books/:id", (req, res) => {
   const bookId = req.params.id;
-  const q = "UPDATE books SET `title`= ?, `desc`= ?, `price`= ?, `cover`= ? WHERE id = ?";
+  const q = "UPDATE books SET `title`= ?, `description`= ?, `price`= ?, `cover`= ? WHERE id = ?";
 
   const values = [
     req.body.title,
-    req.body.desc,
+    req.body.description,
     req.body.price,
     req.body.cover,
   ];
 
-  db.query(q, [...values,bookId], (err, data) => {
+  db.query(q, [...values, bookId], (err, data) => {
     if (err) return res.send(err);
     return res.json(data);
   });

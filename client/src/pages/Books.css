@@ -1,0 +1,91 @@
+.books-container {
+    text-align: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+    min-height: 100vh;
+  }
+  
+  .books h1 {
+    margin-bottom: 20px;
+  }
+  
+  .books {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .book {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .book-cover {
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+  }
+  
+  .book-title {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+  
+  .book-desc {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .book-price {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .book-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .delete-button,
+  .update-button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .delete-button {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .update-button {
+    background-color: #2196f3;
+    color: white;
+  }
+  
+  .add-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: teal;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .add-button a {
+    color: white;
+    text-decoration: none;
+  }
+  

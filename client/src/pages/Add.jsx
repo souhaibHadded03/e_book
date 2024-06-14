@@ -1,6 +1,5 @@
 import axios from "axios";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Add = () => {
@@ -8,10 +7,9 @@ const Add = () => {
     title: "",
     desc: "",
     price: null,
-    cover: "",
+    cover: "", 
   });
-  const [error,setError] = useState(false)
-
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -25,7 +23,7 @@ const Add = () => {
       navigate("/");
     } catch (err) {
       console.log(err);
-      setError(true)
+      setError(true);
     }
   };
 
@@ -41,7 +39,7 @@ const Add = () => {
       <textarea
         rows={5}
         type="text"
-        placeholder="Book desc"
+        placeholder="Book description"
         name="desc"
         onChange={handleChange}
       />
@@ -53,7 +51,7 @@ const Add = () => {
       />
       <input
         type="text"
-        placeholder="Book cover"
+        placeholder="Cover image URL"
         name="cover"
         onChange={handleChange}
       />

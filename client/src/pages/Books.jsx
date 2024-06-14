@@ -1,8 +1,7 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import "./Books.css"; 
 
 const Books = () => {
   const [books, setBooks] = useState([]);
@@ -19,43 +18,39 @@ const Books = () => {
     fetchAllBooks();
   }, []);
 
-  console.log(books);
-
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:8800/books/${id}`);
-      window.location.reload();
+      setBooks(books.filter((book) => book.id !== id)); 
     } catch (err) {
       console.log(err);
     }
   };
 
   return (
-    <div>
-      <h1>eBook library</h1>
+    <div className="books-container">
+      <h1>eBook Library</h1>
       <div className="books">
         {books.map((book) => (
           <div key={book.id} className="book">
-            <img src={book.cover} alt="" />
-            <h2>{book.title}</h2>
-            <p>{book.desc}</p>
-            <span>${book.price}</span>
-            <button className="delete" onClick={() => handleDelete(book.id)}>
-              Delete
-            </button>
-            <button className="update">
-              <Link
-                to={`/update/${book.id}`}
-                style={{ color: "inherit", textDecoration: "none" }}
-              >
-                Update
-              </Link>
-            </button>
+            <img src={book.cover} alt={book.title} className="book-cover" />
+            <h2 className="book-title">{book.title}</h2>
+            <p className="book-desc">{book.description}</p>
+            <span className="book-price">${book.price}</span>
+            <div className="book-buttons">
+              <button className="delete-button" onClick={() => handleDelete(book.id)}>
+                Delete
+              </button>
+              <button className="update-button">
+                <Link to={`/update/${book.id}`} style={{ color: "inherit", textDecoration: "none" }}>
+                  Update
+                </Link>
+              </button>
+            </div>
           </div>
         ))}
       </div>
-
-      <button className="addHome">
+      <button className="add-button">
         <Link to="/add" style={{ color: "inherit", textDecoration: "none" }}>
           Add new book
         </Link>
