@@ -48,7 +48,7 @@ app.post("/books", (req, res) => {
       return res.status(500).json({ error: "Error inserting book" });
     }
     const insertedBook = {
-      id: result.insertId, // Assuming your result object provides the inserted ID
+      id: result.insertId, 
       title,
       description,
       price,
